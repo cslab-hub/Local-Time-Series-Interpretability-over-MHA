@@ -16,3 +16,10 @@ A list of all needed dependencies:
 This code represents the used model for the following publication: TODO
 
 If you use, build upon this work or if it helped in any other way, please cite the linked publication.
+
+
+## Datasets
+
+Included datasets are:
+http://www.timeseriesclassification.com/description.php?Dataset=SyntheticControl
+http://www.timeseriesclassification.com/description.php?Dataset=ECG5000
