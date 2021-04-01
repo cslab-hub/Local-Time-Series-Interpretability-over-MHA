@@ -1,6 +1,6 @@
 # Local-Time-Series-Interpretability-over-MHA
 
-## NOTE: C
+## NOTE:
 Code and information about the project is still in preparation and will soon be provided!
 
 ## Description
