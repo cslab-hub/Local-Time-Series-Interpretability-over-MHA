@@ -24,13 +24,14 @@ def symbolize(X, scaler):
         #X_t.append(' '.join(X_s[i, :, :][:,0]))
     return X_s
 
-# translate the a string [a,e] between 
+# maps a string from vocab to [-1,1] in uniform steps
 def trans(val, vocab) -> float:
     for i in range(len(vocab)):
         if val == vocab[i]:
             halfSize = (len(vocab)-1)/2
             return (i - halfSize) / halfSize
 
+# Transform the data based on the given already fit SAX scaler and maps the symbols to [-1,1] via the trans method 
 def symbolizeTrans(X, scaler, bins = 5):
     vocab = scaler._check_params(bins)
     X_s = scaler.transform(X)
@@ -44,31 +45,16 @@ def symbolizeTrans(X, scaler, bins = 5):
             X[i][j] = trans(X_s[i][j], vocab)
     return X
 
-def symbolizeTrans2(X, scaler, bins = 5):
-    vocab = scaler._check_params(bins)
-    for i in range(X.shape[0]):
-        #X = X.astype('U13')
-        X_s = X.astype(str) 
-        z1 = scaler.transform(np.array([X[i, :, :][:,0]]))
-        X_s[i, :, :][:,0] = z1
-        for j in range(X.shape[1]):
-            X[i][j][0] = trans(X_s[i][j][0], vocab)
-    return X
-
-def split_dataframe(df, chunk_size = 10000): 
-    chunks = list()
-    num_chunks = len(df) // chunk_size + 1
-    for i in range(num_chunks):
-        chunks.append(df[i*chunk_size:(i+1)*chunk_size])
-    return chunks
-
+#saves a object
 def save_obj(obj, name ):
     with open(name + '.pkl', 'wb') as f:
         np.save(f, obj)
 
+#loades a saved object
 def load_obj(name ):
     with open(name + '.pkl', 'rb') as f:
         return np.load(f, allow_pickle=True)
     
+#truncate a value to 3 zeros
 def truncate(n):
     return int(n * 1000) / 1000

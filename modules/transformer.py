@@ -11,7 +11,7 @@ def point_wise_feed_forward_network(d_model, dff):
       tf.keras.layers.Dense(d_model)  # (batch_size, seq_len, d_model)
   ])
                 
-
+#encoder layer
 class EncoderLayer(tf.keras.layers.Layer):
   def __init__(self, d_model, num_heads, dff, rate=0.1, doMask = False, seed_value = 42):
     super(EncoderLayer, self).__init__()
@@ -48,7 +48,6 @@ class EncoderLayer(tf.keras.layers.Layer):
     #print(x1)
     if self.doMask:
         x1, mask, adminSum = x
-        #mask = tf.not_equal(x1, -2)
         print("aaaaa")
         print(mask)
         attn_output, attention = self.mha([x1, x1, x1], mask = mask)  # (batch_size, input_seq_len, d_model)
@@ -64,7 +63,7 @@ class EncoderLayer(tf.keras.layers.Layer):
     
     return (out2, adminSum, attention)
         
-
+#class which can represent multiple encoder layers with correct input and output handling
 class Encoder(tf.keras.layers.Layer):
   def __init__(self, num_layers, d_model, num_heads, dff, maximum_position_encoding, rate=0.1, input_vocab_size = 10000, maxLen = None, doMask=False, seed_value=42):
     super(Encoder, self).__init__()
@@ -77,21 +76,18 @@ class Encoder(tf.keras.layers.Layer):
     self.pos_encoding = positional_encoding(maximum_position_encoding, 
                                             self.d_model)
     
-    #self.enc_layers = [EncoderLayer(d_model, num_heads, dff, rate, final = z == (num_layers-1)) 
     self.enc_layers = [EncoderLayer(d_model, num_heads, dff, rate, doMask=doMask, seed_value=seed_value) for z in range(num_layers)]
    
     self.dropout = tf.keras.layers.Dropout(rate, seed=seed_value)
     
     self.doMask = doMask
-
-    #self.sumer = adminSum
     
   def build(self, input_shape):
     if self.doMask:
         self.attention = tf.Variable(tf.ones((self.num_heads, input_shape[0][1], input_shape[0][1])), trainable=False, validate_shape=True, name='attentionMat')
     else: 
         self.attention = tf.Variable(tf.ones((self.num_heads, input_shape[1], input_shape[1])), trainable=False, validate_shape=True, name='attentionMat')
-    #self.adminSumer =  tf.zeros(input_shape[1:]) #TODO def in Build rein!!!1 
+
     print(input_shape)
     print('#################')
     self.adminSumer =  0
@@ -123,7 +119,6 @@ class Encoder(tf.keras.layers.Layer):
     
     return x, attention, fullAttention  # (batch_size, input_seq_len, d_model)
 
-  #@tf.function
   def initPhase(self):
     for i in range(self.num_layers):
         #self.sumer = self.enc_layers[i].initPhase(self.sumer)
@@ -147,6 +142,9 @@ def get_angles(pos, i, d_model):
   angle_rates = 1 / np.power(10000, (2 * (i//2)) / np.float32(d_model))
   return pos * angle_rates
 
+#safes the "best" model to load it later
+# safe is based on highest val acc with the smalles val loss
+#probably not optimal but doing fine
 class SaveBest(tf.keras.callbacks.Callback):
     
     def __init__(self, weightsName):
@@ -161,6 +159,7 @@ class SaveBest(tf.keras.callbacks.Callback):
             self.loss = logs['val_loss']
             self.model.save_weights(self.weightsName, overwrite=True)
 
+#custom scheduler with watp up steps
 class CustomSchedule(tf.keras.optimizers.schedules.LearningRateSchedule):
   def __init__(self, d_model, warmup_steps=10000):
     super(CustomSchedule, self).__init__()
