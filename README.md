@@ -32,6 +32,7 @@ matplotlib==3.3.1<br>
 tensorflow_addons==0.11.2<br>
 tensorflow_probability==0.7.0<br>
 
+
 ## Cite and publications
 This code represents the used model for the following publication: TODO
 
@@ -45,5 +46,5 @@ If you use, build upon this work or if it helped in any other way, please cite t
 
 Included datasets are:
 
-http://www.timeseriesclassification.com/description.php?Dataset=SyntheticControl 
+http://www.timeseriesclassification.com/description.php?Dataset=SyntheticControl <br>
 http://www.timeseriesclassification.com/description.php?Dataset=ECG5000
