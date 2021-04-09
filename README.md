@@ -26,7 +26,8 @@ A list of all needed dependencies:
 ## Cite and publications
 This code represents the used model for the following publication: TODO
 
-Preprint: https://martin.atzmueller.net/paper/VisualizingAbstractedTransformerAttentionLocalInterpretability-SchwenkeAtzmueller-2021-preprint.pdf
+Preprint: <br>
+https://martin.atzmueller.net/paper/VisualizingAbstractedTransformerAttentionLocalInterpretability-SchwenkeAtzmueller-2021-preprint.pdf
 
 If you use, build upon this work or if it helped in any other way, please cite the linked publication.
 
@@ -35,5 +36,5 @@ If you use, build upon this work or if it helped in any other way, please cite t
 
 Included datasets are:
 
-http://www.timeseriesclassification.com/description.php?Dataset=SyntheticControl
+http://www.timeseriesclassification.com/description.php?Dataset=SyntheticControl <br>
 http://www.timeseriesclassification.com/description.php?Dataset=ECG5000
