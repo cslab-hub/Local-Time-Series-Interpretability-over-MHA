@@ -1,8 +1,5 @@
 # Local-Time-Series-Interpretability-over-MHA
 
-## NOTE:
-Code and information about the project is still in preparation and will soon be provided!
-
 ## Description
 
 The given code can provide a local abstraction of time series data based on MHA. To archive this, we train a transformer model on a time series classification problem which was symbolized by the SAX algorithm. Over two given thresholds the MHA attention matrix is used to abstract the data. The code further includes a visualization for local interpretability over the abstracted data. With a human in the loop process, a human can use the local visualization to improve the thresholds for each dataset/classification problem. Additionally, a re-evaluation model is trained to show how well the reduced data performs and by how much the data is reduced. We argue that the visualized abstractions are better interpretable than the normal input data, which is helpful to understand the underlying classification problem.
